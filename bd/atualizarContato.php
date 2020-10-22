@@ -65,6 +65,12 @@ $sql = "update tblcontatos set
             
             where idContato = " . $_SESSION["id"] ." ;";
 
+            //$_SESSION['id'] = null // elimina o conteudo da variavel de sessão
+
+            //session_destroy(); //elimina todas a variaveis de sessão
+
+            //session_unset($_SESSION['id']); //elimina a variavel de sessão inserida ! serve para versões mais antigas do php
+            unset($_SESSION['id']); // igual ao session_unset porem para versões mais novas
 echo ($sql);
 
 // Executa no BD o Script SQL

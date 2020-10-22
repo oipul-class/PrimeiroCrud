@@ -51,52 +51,60 @@ $data[2] = 2003
 $sexo = $_POST['rdoSexo'];
 $obs = $_POST['txtObs'];
 
-$sql = "insert into tblcontatos 
-            (
-                nome, 
-                celular, 
-                email, 
-                idEstado, 
-                dataNascimento, 
-                sexo, 
-                obs
-            )
-            values
-            (
-                '". $nome ."',
-                '". $celular ."',
-                '". $email ."', 
-                 ".$estado.",
-                '". $dataNascimento ."',
-                '". $sexo ."', 
-                '". $obs ."' 
-            )
-        ";
+//  Recebendo o arquivo para uplaod
+
+$diretorioArquivo = "../arquivos/"; // nome da pasta que iremos armazenar as imagens de upload
+
+$arquivoUpload = $_FILES['fleFoto'];
+
+var_dump($arquivoUpload);
+
+// $sql = "insert into tblcontatos 
+//             (
+//                 nome, 
+//                 celular, 
+//                 email, 
+//                 idEstado, 
+//                 dataNascimento, 
+//                 sexo, 
+//                 obs
+//             )
+//             values
+//             (
+//                 '". $nome ."',
+//                 '". $celular ."',
+//                 '". $email ."', 
+//                  ".$estado.",
+//                 '". $dataNascimento ."',
+//                 '". $sexo ."', 
+//                 '". $obs ."' 
+//             )
+//         ";
 
 
 
-//Executa no BD o Script SQL
+// //Executa no BD o Script SQL
 
-if (mysqli_query($conex, $sql))
-{
-    echo("
-            <script>
-                alert('Registro Inserido com sucesso!');
-                location.href = '../index.php';
-            </script>
-    ");
+// if (mysqli_query($conex, $sql))
+// {
+//     echo("
+//             <script>
+//                 alert('Registro Inserido com sucesso!');
+//                 location.href = '../index.php';
+//             </script>
+//     ");
     
-    //Permite redirecionar para uma outra página
-    //header('location:../index.php');
-}
-else
-    echo("
-            <script>
-                alert('Erro ao Inserir os dados no Banco de Dados! Favor verificar a digitação de todos os dados.');
-                location.href = '../index.php';
-                window.history.back();
-            </script>
+//     //Permite redirecionar para uma outra página
+//     //header('location:../index.php');
+// }
+// else
+//     echo("
+//             <script>
+//                 alert('Erro ao Inserir os dados no Banco de Dados! Favor verificar a digitação de todos os dados.');
+//                 location.href = '../index.php';
+//                 window.history.back();
+//             </script>
     
-        ");
+//         ");
 
 ?>

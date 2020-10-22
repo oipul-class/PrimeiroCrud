@@ -136,7 +136,9 @@ if (isset($_GET["modo"])) {
             </div>
             <div id="cadastroInformacoes">
         
-                <form action="<?= $action ?>" name="frmCadastro" method="post" >
+                <form action="<?= $action ?>" name="frmCadastro" method="post" enctype="multipart/form-data"> <!-- permitir que o formulario possa tirar dados tradicionais e arquivos 
+                !!! é obrigatório o form ser do metodo POST
+                -->
                    
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
@@ -144,6 +146,15 @@ if (isset($_GET["modo"])) {
                         </div>
                         <div class="cadastroEntradaDeDados">
                             <input type="text" name="txtNome" value="<?=@$nome?>" placeholder="Digite seu Nome" required pattern="[a-z A-Z é]*">
+                        </div>
+                    </div>
+
+                    <div class="campos">
+                        <div class="cadastroInformacoesPessoais">
+                            <p> arquivo: </p>
+                        </div>
+                        <div class="cadastroEntradaDeDados">
+                            <input type="file" name="fleFoto" accept=".jpg , .png , .jpeg"> <!-- colocar arquivos no site-->
                         </div>
                     </div>
                     <div class="campos">
