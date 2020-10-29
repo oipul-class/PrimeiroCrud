@@ -69,49 +69,52 @@ if (isset($_GET["modo"])) {
 
 <!DOCTYPE>
 <html lang="pt-br">
-    <head>
-        
-        <meta charset="UTF-8">
-        <title> Cadastro </title>
-        <link rel="stylesheet" type="text/css" href="style/style.css">
-        <script src="js/jquery.js"></script>
-        <script>
-            $(document).ready(function(){
-                    //function para carregar a modal
-                    $(".pesquisar").click(function(){
-                        $("#modalContainer").slideDown(500);
-                    });
 
-                    $("#modalExit").click(function(){
-                        $("#modalContainer").slideUp(500);
-                    });
-                
-            });
+<head>
 
-            
-            //function para carregar o visualizar Contato na modal
-            const visualizar = (id) => {
-                $.ajax({ //enviar dado
-                    type: "POST",
-                    url: "visualizarContato.php",
-                    data: {idContato:id},
-                    success: function(dados) {
-                        $("#modal").html(dados);
-                    }
+    <meta charset="UTF-8">
+    <title> Cadastro </title>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <script src="js/jquery.js"></script>
+    <script>
+    $(document).ready(function() {
+        //function para carregar a modal
+        $(".pesquisar").click(function() {
+            $("#modalContainer").slideDown(500);
+        });
 
-                });
-            };
-            
-        </script>
-    </head>
-    <body>
-        <div id="modalContainer">
-            <!-- <img src="./img/trash.png" id="modalExit"> -->
-            <div id="modal">
-                
-            </div>
+        $("#modalExit").click(function() {
+            $("#modalContainer").slideUp(500);
+        });
+
+    });
+
+
+    //function para carregar o visualizar Contato na modal
+    const visualizar = (id) => {
+        $.ajax({ //enviar dado
+            type: "POST",
+            url: "visualizarContato.php",
+            data: {
+                idContato: id
+            },
+            success: function(dados) {
+                $("#modal").html(dados);
+            }
+
+        });
+    };
+    </script>
+</head>
+
+<body>
+    <div id="modalContainer">
+        <!-- <img src="./img/trash.png" id="modalExit"> -->
+        <div id="modal">
+
         </div>
-        <!-- 
+    </div>
+    <!-- 
             Elementos para formulário do HTML 5
                 <input type="tel" - indica que o dado a ser digitado será um telefone
                 <input type="email" - indica que o dado a ser digitado será email
@@ -130,69 +133,72 @@ if (isset($_GET["modo"])) {
                 pattern - 
 
         -->
-        <div id="cadastro"> 
-            <div id="cadastroTitulo"> 
-                <h1> Cadastro de Contatos </h1>
-            </div>
-            <div id="cadastroInformacoes">
-        
-                <form action="<?= $action ?>" name="frmCadastro" method="post" enctype="multipart/form-data"> <!-- permitir que o formulario possa tirar dados tradicionais e arquivos 
+    <div id="cadastro">
+        <div id="cadastroTitulo">
+            <h1> Cadastro de Contatos </h1>
+        </div>
+        <div id="cadastroInformacoes">
+
+            <form action="<?= $action ?>" name="frmCadastro" method="post" enctype="multipart/form-data">
+                <!-- enctype="multipart/form-data" - permitir que o formulario possa tirar dados tradicionais e arquivos 
                 !!! é obrigatório o form ser do metodo POST
                 -->
-                   
-                    <div class="campos">
-                        <div class="cadastroInformacoesPessoais">
-                            <p> Nome: </p>
-                        </div>
-                        <div class="cadastroEntradaDeDados">
-                            <input type="text" name="txtNome" value="<?=@$nome?>" placeholder="Digite seu Nome" required pattern="[a-z A-Z é]*">
-                        </div>
-                    </div>
 
-                    <div class="campos">
-                        <div class="cadastroInformacoesPessoais">
-                            <p> arquivo: </p>
-                        </div>
-                        <div class="cadastroEntradaDeDados">
-                            <input type="file" name="fleFoto" accept=".jpg , .png , .jpeg"> <!-- colocar arquivos no site-->
-                        </div>
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <p> Nome: </p>
                     </div>
-                    <div class="campos">
-                        <div class="cadastroInformacoesPessoais">
-                            <p> Celular: </p>
-                        </div>
-                        <div class="cadastroEntradaDeDados">
-                            <input type="tel" name="txtCelular" value="<?=@$celular?>" pattern="[(][0-9]{2}[)][0-9]{5}-[0-9]{4}" placeholder="(99)99999-9999">
-                        </div>
+                    <div class="cadastroEntradaDeDados">
+                        <input type="text" name="txtNome" value="<?=@$nome?>" placeholder="Digite seu Nome" required
+                            pattern="[a-z A-Z é]*">
                     </div>
-                    <div class="campos">
-                        <div class="cadastroInformacoesPessoais">
-                            <p> Email: </p>
-                        </div>
-                        <div class="cadastroEntradaDeDados">
-                            <input type="email" name="txtEmail" value="<?=@$email?>">
-                        </div>
+                </div>
+
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <p> arquivo: </p>
                     </div>
-                    <div class="campos">
-                        <div class="cadastroInformacoesPessoais">
-                            <p> Estados: </p>
-                        </div>
-                        <div class="cadastroEntradaDeDados">
-                            <select name="sltEstados">
-                                <?php 
+                    <div class="cadastroEntradaDeDados">
+                        <input type="file" name="fleFoto" accept=".jpg , .png , .jpeg"> <!-- colocar arquivos no site-->
+                    </div>
+                </div>
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <p> Celular: </p>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <input type="tel" name="txtCelular" value="<?=@$celular?>"
+                            pattern="[(][0-9]{2}[)][0-9]{5}-[0-9]{4}" placeholder="(99)99999-9999">
+                    </div>
+                </div>
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <p> Email: </p>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <input type="email" name="txtEmail" value="<?=@$email?>">
+                    </div>
+                </div>
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <p> Estados: </p>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <select name="sltEstados">
+                            <?php 
                                     if ( isset($_GET["modo"]) && strtoupper($_GET["modo"])=="CONSULTAR") {
                                 ?>
-                                
-                                <option value="<?=$idEstado?>" ><?=$sigla?></option>
 
-                                <?php 
+                            <option value="<?=$idEstado?>"><?=$sigla?></option>
+
+                            <?php 
                                     }
                                     else {
                                 ?>
-                                
-                                <option value="" hidden>Selecione um Item</option>
-                        
-                                <?php
+
+                            <option value="" hidden>Selecione um Item</option>
+
+                            <?php
 
                                     }
                                     $sql = "select * from tblestados
@@ -209,65 +215,65 @@ if (isset($_GET["modo"])) {
                                     while($rsEstados = mysqli_fetch_assoc($select))
                                     {
                                 ?>
-                                
-                                    <option value="<?=$rsEstados['idEstado']?>"> <?=$rsEstados['sigla'];?> </option>
-                                
-                                <?php 
+
+                            <option value="<?=$rsEstados['idEstado']?>"> <?=$rsEstados['sigla'];?> </option>
+
+                            <?php 
                                     }
                                 
                                 ?>
-                            </select>
-                        </div>
+                        </select>
                     </div>
-                    <div class="campos">
-                        <div class="cadastroInformacoesPessoais">
-                            <p> Data de Nascimento: </p>
-                        </div>
-                        <div class="cadastroEntradaDeDados">
-                            <input type="text" name="txtNascimento" value="<?=@$dataNasc?>" placeholder="dd/mm/yyyy">
-                        </div>
+                </div>
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <p> Data de Nascimento: </p>
                     </div>
-                    <div class="campos">
-                        <div class="cadastroInformacoesPessoais">
-                           Sexo:
-                        </div>
-                        <div class="cadastroEntradaDeDados">
-                            <input type="radio" name="rdoSexo" value="F" <?=@$chkFeminino?> >Feminino.
-                            <input type="radio" name="rdoSexo" value="M" <?=@$chkMasculino?> >Masculino.
-                        </div>
+                    <div class="cadastroEntradaDeDados">
+                        <input type="text" name="txtNascimento" value="<?=@$dataNasc?>" placeholder="dd/mm/yyyy">
                     </div>
-                    <div class="campos">
-                        <div class="cadastroInformacoesPessoais">
-                            <p> Observações: </p>
-                        </div>
-                        <div class="cadastroEntradaDeDados">
-                            <textarea name="txtObs" cols="50" rows="7"><?=@$obs?></textarea>
-                        </div>
+                </div>
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        Sexo:
                     </div>
+                    <div class="cadastroEntradaDeDados">
+                        <input type="radio" name="rdoSexo" value="F" <?=@$chkFeminino?>>Feminino.
+                        <input type="radio" name="rdoSexo" value="M" <?=@$chkMasculino?>>Masculino.
+                    </div>
+                </div>
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <p> Observações: </p>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <textarea name="txtObs" cols="50" rows="7"><?=@$obs?></textarea>
+                    </div>
+                </div>
+                <div class="enviar">
                     <div class="enviar">
-                        <div class="enviar">
-                            <input type="submit" name="btnEnviar" value="Salvar">
-                        </div>
+                        <input type="submit" name="btnEnviar" value="Salvar">
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
-        <div id="consultaDeDados">
-            <table id="tblConsulta" >
-                <tr>
-                    <td id="tblTitulo" colspan="5">
-                        <h1> Consulta de Dados.</h1>
-                    </td>
-                </tr>
-                <tr id="tblLinhas">
-                    <td class="tblColunas"> Nome </td>
-                    <td class="tblColunas"> Celular </td>
-                    <td class="tblColunas"> Estado </td>
-                    <td class="tblColunas"> Email </td>
-                    <td class="tblColunas"> Opções </td>
-                </tr>
-                
-                <?php
+    </div>
+    <div id="consultaDeDados">
+        <table id="tblConsulta">
+            <tr>
+                <td id="tblTitulo" colspan="5">
+                    <h1> Consulta de Dados.</h1>
+                </td>
+            </tr>
+            <tr id="tblLinhas">
+                <td class="tblColunas"> Nome </td>
+                <td class="tblColunas"> Celular </td>
+                <td class="tblColunas"> Estado </td>
+                <td class="tblColunas"> Email </td>
+                <td class="tblColunas"> Opções </td>
+            </tr>
+
+            <?php
                     //Script para buscar todos os dados no BD
                     $sql = " select tblcontatos.idContato, tblcontatos.nome, tblcontatos.celular,                       tblcontatos.email, tblestados.sigla 
                              from tblcontatos, tblestados
@@ -293,30 +299,33 @@ if (isset($_GET["modo"])) {
                     while($rsContatos = mysqli_fetch_assoc($select))
                     {
                 ?>
-                    <tr id="tblLinhas">
-                        <td class="tblColunas"><?=$rsContatos['nome']?>  </td>
-                        <td class="tblColunas"><?=$rsContatos['celular']?>  </td>
-                        <td class="tblColunas"><?=$rsContatos['sigla']?>  </td>
-                        <td class="tblColunas"><?=$rsContatos['email']?>  </td>
-                        <td class="tblColunas">
-                            <a href="bd/excluirContato.php?modo=excluir&id=<?=$rsContatos['idContato']?>" onclick="return confirm('Deseja realmente excluir esse Registro?')">
-                                <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
-                            </a>
+            <tr id="tblLinhas">
+                <td class="tblColunas"><?=$rsContatos['nome']?> </td>
+                <td class="tblColunas"><?=$rsContatos['celular']?> </td>
+                <td class="tblColunas"><?=$rsContatos['sigla']?> </td>
+                <td class="tblColunas"><?=$rsContatos['email']?> </td>
+                <td class="tblColunas">
+                    <a href="bd/excluirContato.php?modo=excluir&id=<?=$rsContatos['idContato']?>"
+                        onclick="return confirm('Deseja realmente excluir esse Registro?')">
+                        <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
+                    </a>
 
-                            <a href="index.php?modo=consultar&id=<?=$rsContatos['idContato']?>">
-                                <img src="img/edit.png" alt="Editar" title="Editar" class="editar">
-                            </a>  
-                                
-                            <img src="img/search.png" alt="Visualizar" title="Visualizar" class="pesquisar" onclick="visualizar(<?=$rsContatos['idContato']?>);">
-                        </td>
-                    </tr>
-                <?php 
+                    <a href="index.php?modo=consultar&id=<?=$rsContatos['idContato']?>">
+                        <img src="img/edit.png" alt="Editar" title="Editar" class="editar">
+                    </a>
+
+                    <img src="img/search.png" alt="Visualizar" title="Visualizar" class="pesquisar"
+                        onclick="visualizar(<?=$rsContatos['idContato']?>);">
+                </td>
+            </tr>
+            <?php 
                     }
                 
-                ?>    
-                
-            </table>
+                ?>
 
-        </div>
-    </body>
+        </table>
+
+    </div>
+</body>
+
 </html>
