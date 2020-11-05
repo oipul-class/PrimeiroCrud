@@ -61,8 +61,8 @@ $sql = "update tblcontatos set
             idEstado = ".$estado.",
             dataNascimento = '".$dataNascimento."',
             sexo = '".$sexo."',
-            obs = '".$obs."'
-            
+            obs = '".$obs."',
+                        
             where idContato = " . $_SESSION["id"] ." ;";
 
             //$_SESSION['id'] = null // elimina o conteudo da variavel de sessão

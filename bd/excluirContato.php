@@ -27,14 +27,26 @@ if(isset($_GET['modo']))
             
             //Recebendo o id para a exclusão
             $idContato = $_GET['id'];
-
+            
             $sql = "delete from tblcontatos 
                     where idContato = " . $idContato;
+
+            
+                
 
             //Executa no BD o Script SQL
 
             if (mysqli_query($conex, $sql))
             {
+                //apagar a imagem do contato
+                //recebendo a foto para ser excluida se o contato for deletado do bd 
+                $nomeDafoto = $_GET['foto'];
+
+                if($nomeDafoto!="noImage.png") {
+                    unlink("../arquivos/".$nomeDafoto); // deleta a foto 
+                }
+
+
                 echo("
                         <script>
                             alert('Registro Excluido com sucesso!');

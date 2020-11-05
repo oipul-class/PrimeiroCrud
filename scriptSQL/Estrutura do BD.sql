@@ -72,11 +72,12 @@ insert into tblcontatos ( nome, celular, email, idEstado, dataNascimento, sexo, 
  
  select * from tblcontatos order by idContato desc;
  
- 
- 
  select * from tblestados;
  
+ update tblcontatos set foto = "noImage.png";
  
+ select foto from tblContatos;
+
  
 
 

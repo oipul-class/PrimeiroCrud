@@ -51,7 +51,7 @@ if (isset($_GET["modo"])) {
                 elseif (strtoupper($sexo) == "M") {
                     $chkMasculino = "checked";
                 }
-                $dataNascimento = explode( "-" , $rsContatos['dataNascimento']);
+                $dataNascimento = explode( "-" , $rsContatos['dataNacimento']);
                 $dataNasc = $dataNascimento[2] . "/" . $dataNascimento[1] . "/" . $dataNascimento[0];
                 $obs = $rsContatos['obs'];
                 $idEstado = $rsContatos['idEstado'];
@@ -261,7 +261,7 @@ if (isset($_GET["modo"])) {
     <div id="consultaDeDados">
         <table id="tblConsulta">
             <tr>
-                <td id="tblTitulo" colspan="5">
+                <td id="tblTitulo" colspan="6">
                     <h1> Consulta de Dados.</h1>
                 </td>
             </tr>
@@ -270,12 +270,13 @@ if (isset($_GET["modo"])) {
                 <td class="tblColunas"> Celular </td>
                 <td class="tblColunas"> Estado </td>
                 <td class="tblColunas"> Email </td>
+                <td class="tblColunas"> Foto </td>
                 <td class="tblColunas"> Opções </td>
             </tr>
 
             <?php
                     //Script para buscar todos os dados no BD
-                    $sql = " select tblcontatos.idContato, tblcontatos.nome, tblcontatos.celular,                       tblcontatos.email, tblestados.sigla 
+                    $sql = " select tblcontatos.idContato, tblcontatos.nome, tblcontatos.celular, tblcontatos.foto,                        tblcontatos.email, tblestados.sigla 
                              from tblcontatos, tblestados
                              where tblcontatos.idEstado = tblestados.idEstado 
                              order by tblcontatos.idContato desc
@@ -304,8 +305,9 @@ if (isset($_GET["modo"])) {
                 <td class="tblColunas"><?=$rsContatos['celular']?> </td>
                 <td class="tblColunas"><?=$rsContatos['sigla']?> </td>
                 <td class="tblColunas"><?=$rsContatos['email']?> </td>
+                <td class="tblColunas"> <img class="foto" src="arquivos/<?=$rsContatos['foto']?>"> </td>
                 <td class="tblColunas">
-                    <a href="bd/excluirContato.php?modo=excluir&id=<?=$rsContatos['idContato']?>"
+                    <a href="bd/excluirContato.php?modo=excluir&id=<?=$rsContatos['idContato']?>&foto=<?=$rsContatos['foto']?>"
                         onclick="return confirm('Deseja realmente excluir esse Registro?')">
                         <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
                     </a>
@@ -319,8 +321,7 @@ if (isset($_GET["modo"])) {
                 </td>
             </tr>
             <?php 
-                    }
-                
+                    }        
                 ?>
 
         </table>

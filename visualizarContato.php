@@ -34,7 +34,7 @@
         $celular = $rscontato['celular'];
         $email = $rscontato['email'];
         $estado = $rscontato['sigla'];
-        $dataNascimento = explode("-" , $rscontato['dataNascimento']);
+        $dataNascimento = explode("-" , $rscontato['dataNacimento']);
         $dataNasc = $dataNascimento[2] . "/" . $dataNascimento[1] . "/" . $dataNascimento[0];
         $sexo = $rscontato['sexo'];
         if (strtoupper($sexo)=='F') {
