@@ -21,11 +21,11 @@ function conexaoMysql ()
     /*Variaveis para conexão com o BD*/
     $server = (string) "localhost";
     $user = (string) "root";
-    $password = (string) "mysqlPass";
+    $password = (string) "bcd127";
     $dataBase = (string) "dbcontatos20202t";
 
     /*Cria a conexão com o BD MySQL*/
-    if ($conexao = @mysqli_connect($server, $user, $password, $dataBase))
+    if ($conexao = mysqli_connect($server, $user, $password, $dataBase))
         return $conexao;
     else
         return false;

@@ -51,7 +51,7 @@ if (isset($_GET["modo"])) {
                 elseif (strtoupper($sexo) == "M") {
                     $chkMasculino = "checked";
                 }
-                $dataNascimento = explode( "-" , $rsContatos['dataNacimento']);
+                $dataNascimento = explode( "-" , $rsContatos['dataNascimento']);
                 $dataNasc = $dataNascimento[2] . "/" . $dataNascimento[1] . "/" . $dataNascimento[0];
                 $obs = $rsContatos['obs'];
                 $idEstado = $rsContatos['idEstado'];
