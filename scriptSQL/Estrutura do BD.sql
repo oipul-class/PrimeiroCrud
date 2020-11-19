@@ -70,18 +70,19 @@ insert into tblcontatos ( nome, celular, email, idEstado, dataNascimento, sexo, 
  
  #Error Code: 1054. Unknown column 'obs' in 'field list'
  
- select * from tblcontatos order by idContato desc;
+select * from tblcontatos order by idContato desc;
  
- select * from tblestados;
+select * from tblestados;
  
- update tblcontatos set foto = "noImage.png";
+update tblcontatos set foto = "noImage.png" where foto = "";
  
- select foto from tblContatos;
+select * from tblContatos where statusContato = 1 order by tblContatos.nome asc;
 
- 
+alter table tblContatos add column statusContato boolean;
 
-
-
+update tblContatos set statusContato = 0;
+  
+select tblContatos.*, tblEstados.sigla from tblContatos, tblEstados where tblContatos.idEstado = tblEstados.idEstado and statusContato = 1
 
 
 

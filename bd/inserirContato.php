@@ -64,7 +64,7 @@ $sql = "insert into tblcontatos
                 celular, 
                 email, 
                 idEstado, 
-                dataNacimento, 
+                dataNascimento, 
                 sexo, 
                 obs,
                 foto
@@ -78,12 +78,10 @@ $sql = "insert into tblcontatos
                  ".$estado.",
                 '". $dataNascimento ."',
                 '". $sexo ."', 
-                '". $obs ."' ,
+                '". $obs ."',
                 '" . $foto . "'
             )
         ";
-
-echo $sql;
 
 // Executa no BD o Script SQL
 
