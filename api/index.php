@@ -11,19 +11,19 @@ $app = new \Slim\App();
 
 //metodo get
 
-//EndPoint parar o acesso a araiz da pasata da API
+//EndPoint para o acesso a raiz da pasta da API
 $app->get('/', function ($resquest, $response, $args){ // get ('/' = site/api/ (/pedido) ou raiz ,  function ($resquest, $response, $args){} 
     //resquest = pedido | response = dados/resposta | args = argumentos
     return $response->getBody()->write("API de contatos do CRUD"); //para enviar dados no body do protocolo http ou escrever uma mensagem para o usuario
 }); 
 
-//EndPoint parar o acesso a araiz da pasata da API
+//EndPoint para o acesso a os contatos do banco pela API
 $app->get('/contatos', function ($resquest, $response, $args){ // get ('/' = site/api/ (/pedido) ou raiz ,  function ($resquest, $response, $args){} 
     //resquest = pedido | response = dados/resposta | args = argumentos
 
     require_once("../bd/apiContatos.php"); //import do arquivo que vai buscar no banco de dados
 
-    $listContatos = listarContatos();
+    $listContatos = listarContatos(0);
     if($listContatos) { // função para listar todos os contatos 
         return $response    -> withStatus(200)
                             -> withHeader('Content-Type', 'application/json')
@@ -37,6 +37,31 @@ $app->get('/contatos', function ($resquest, $response, $args){ // get ('/' = sit
     
     //return $response->getBody()->write("Listar dados de contatos"); //para enviar dados no body do protocolo http ou escrever uma mensagem para o usuario
 });
+
+//EndPoint para buscar contato pelo id
+//quando ira chegar um valor pelo metodo get deve usar o padrão que o parametro deve ter {}
+$app->get('/contatos/{id}' , function ($resquest, $response, $args){
+    //tudo depois da barra como parametro...exemplo = (id)... é pego pelo args
+        
+    $id = $args['id'];
+    
+    require_once("../bd/apiContatos.php"); //import do arquivo que vai buscar no banco de dados
+
+    $listContatos = listarContatos($id);
+    if($listContatos) { // função para listar todos os contatos 
+        return $response    -> withStatus(200)
+                            -> withHeader('Content-Type', 'application/json')
+                            -> write($listContatos);
+        //widthStatus (status http)
+        //widthHeader ('Content-Type' , 'application/tipo')
+        //write() escreve na tela
+    }else {
+        return $response    -> withStatus(204);
+    }  
+
+    
+});
+
 
 
 $app->run(); // carrega todos os EndPoints criados na API !!!sempre deixar como ultima linha
