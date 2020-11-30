@@ -62,6 +62,8 @@ select * from tblestados;
 
 select * from tblcontatos;
 
+select * from tblContatos where tblContatos.nome like pedro;
+
 use dbcontatos20202t;
 
 insert into tblcontatos ( nome, celular, email, idEstado, dataNascimento, sexo, obs ) values
@@ -80,10 +82,9 @@ select * from tblContatos where statusContato = 1 order by tblContatos.nome asc;
 
 alter table tblContatos add column statusContato boolean;
 
-update tblContatos set statusContato = 0;
+update tblContatos set statusContato = 1;
   
 select tblContatos.*, tblEstados.sigla from tblContatos, tblEstados where tblContatos.idEstado = tblEstados.idEstado and statusContato = 1
-
 
 
 
