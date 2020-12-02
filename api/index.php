@@ -11,22 +11,22 @@ $app = new \Slim\App();
 //metodo get
 
 //EndPoint para o acesso a raiz da pasta da API
-$app->get('/', function ($resquest, $response, $args){ // get ('/' = site/api/ (/pedido) ou raiz ,  function ($resquest, $response, $args){} 
-    //resquest = pedido | response = dados/resposta | args = argumentos
+$app->get('/', function ($request, $response, $args){ // get ('/' = site/api/ (/pedido) ou raiz ,  function ($request, $response, $args){} 
+    //request = pedido | response = dados/resposta | args = argumentos
     return $response->getBody()->write("API de contatos do CRUD"); //para enviar dados no body do protocolo http ou escrever uma mensagem para o usuario
 }); 
 
 //EndPoint para o acesso a os contatos do banco pela API
-$app->get('/contatos', function ($resquest, $response, $args){ // get ('/' = site/api/ (/pedido) ou raiz ,  function ($resquest, $response, $args){} 
+$app->get('/contatos', function ($request, $response, $args){ // get ('/' = site/api/ (/pedido) ou raiz ,  function ($request, $response, $args){} 
 
     require_once("../bd/apiContatos.php"); //import do arquivo que vai buscar no banco de dados
 
     //recebendo dados da QueryString (essas variáveis podem ou não chegar na requisição)
     //existem duas maneiras de receber uma variavel pela QueryString (no php)
     // 1- $_GET
-    // 2- getQueryStringParams() - ( do slim ) -- uso = $(nome da variavel) = $resquest->getQueryParams()[(nome da variavel)]
-    if(isset($resquest->getQueryParams()['nome'])){
-        $nome = $resquest->getQueryParams()['nome'];
+    // 2- getQueryStringParams() - ( do slim ) -- uso = $(nome da variavel) = $request->getQueryParams()[(nome da variavel)]
+    if(isset($request->getQueryParams()['nome'])){
+        $nome = $request->getQueryParams()['nome'];
 
 
         $listContatos = buscarContatos($nome);
@@ -52,7 +52,7 @@ $app->get('/contatos', function ($resquest, $response, $args){ // get ('/' = sit
 
 //EndPoint para buscar contato pelo id
 //quando ira chegar um valor pelo metodo get deve usar o padrão que o parametro deve ter {}
-$app->get('/contatos/{id}' , function ($resquest, $response, $args){
+$app->get('/contatos/{id}' , function ($request, $response, $args){
     //tudo depois da barra como parametro...exemplo = (id)... é pego pelo args
     //$args - puxar parametros colocado na url
 
@@ -75,6 +75,88 @@ $app->get('/contatos/{id}' , function ($resquest, $response, $args){
     
 });
 
+//EndPoint para inserir 
+//conselho: a chegadas dos dados deve ser json
 
+//FormData
+$app->post('/contatos', function ($request, $response, $args){
+    //garantindo que o formato seja JSON
+
+    //recebe o content-type da requesição
+    $contentType = $request->getHeaderLine('Content-Type'); // getHeaderLine permite pegar conteudo sobre o header
+
+    //validando se é um json
+    if ($contentType == "application/json") {
+        //recebe todos os dados enviados para a api
+        $dadosJson = $request->getParsedBody();
+        
+        if ($dadosJson=="" || $dadosJson==null) {
+
+            return $response -> withStatus(400)
+                             -> withHeader('Content-Type', 'application/json')
+                             -> write('
+                                {
+                                    "status":"Fail",
+                                    "Message":"Dados enviados não podem ser nulos"
+                                }
+                                ');
+
+        }else {
+            //Require das funções
+            require_once("../bd/apiContatos.php");
+            //dados inseridos com sucesso
+            if ($dados = inserirContato($dadosJson)) {
+                return $response -> withStatus(201)
+                                 -> withHeader('Content-Type', 'application/json')
+                                 -> write($dados); 
+            }else { //falha na inserção dos dados
+                return $response -> withStatus(401)
+                                 -> withHeader('Content-Type', 'application/json')
+                                 -> write('
+                                        {
+                                            "status":"Fail",
+                                            "Message":"Falha ao inserir os dados no BD. Verificar se os dados enviados estão corretos"
+                                        }
+                                        ');
+            }
+
+        }
+
+    }else {
+        //mensagem de erro de Content-Type
+        return $response -> withStatus(415)
+                         -> withHeader('Content-Type', 'application/json')
+                         -> write('
+                                {
+                                    "status":"Fail",
+                                    "Message":"Erro no Content-Type da Requisição"
+                                }
+                                ');
+    }
+});
+
+$app->delete('/contatos/{id}' , function ($request, $response, $args){
+    //tudo depois da barra como parametro...exemplo = (id)... é pego pelo args
+    //$args - puxar parametros colocado na url
+
+    $id = $args['id'];
+    
+    require_once("../bd/apiContatos.php"); //import do arquivo que vai buscar no banco de dados
+
+    
+    if($listContatos = deletarContato($id)) { // função para listar todos os contatos 
+        return $response    -> withStatus(200)
+                            -> withHeader('Content-Type', 'application/json')
+                            -> write("contato deletado");
+        //widthStatus (status http)
+        //widthHeader ('Content-Type' , 'application/tipo')
+        //write() escreve na tela
+    }else {
+        return $response    -> withStatus(400)
+                            -> write("contato não existe");
+    }
+
+    
+});
 
 $app->run(); // carrega todos os EndPoints criados na API !!!sempre deixar como ultima linha
