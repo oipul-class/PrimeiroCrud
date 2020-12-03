@@ -45,20 +45,22 @@ function uploadFoto($arquivo) {
             }
             else // caso o arquvio passe do limite de tamanho 
             {
-                echo "<script> alert('tamanho do arquivo maior do que " . $tamanhoMaximoDoArquivo . "KB'); 
-                location.href = '../index.php';
-                window.history.back();
-                </script>";
-                die;
+                // echo "<script> alert('tamanho do arquivo maior do que " . $tamanhoMaximoDoArquivo . "KB'); 
+                // location.href = '../index.php';
+                // window.history.back();
+                // </script>";
+                // die;
+                return 3;
             }
         } 
         else // caso a extensão seja incopativel
         {
-            echo "<script> alert('extensão de arquivo invalido'); 
-            location.href = '../index.php';
-            window.history.back();
-            </script>";
-            die;
+            // echo "<script> alert('extensão de arquivo invalido'); 
+            // location.href = '../index.php';
+            // window.history.back();
+            // </script>";
+            // die;
+            return 2;
         }
         if ($statusDoUpload)
             return $foto;

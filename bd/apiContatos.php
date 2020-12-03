@@ -204,11 +204,109 @@ function deletarContato($id) {
     // Executa no BD o Script SQL
 
     if (mysqli_query($conex, $sql))
+        if(mysqli_affected_rows($conex) > 0 )
         return true;
-    else
+    else 
         return false;       
      
 }
+
+function updateContato($file , $id , $dadosContato) {
+
+    if($file!=null) {
+        require_once('uploadDaFoto.php');
+
+        $foto = uploadFoto($file);
+
+        
+        if (is_numeric($foto)) {
+            if ($foto==2) 
+                return "Extenção Invalida";
+            elseif ($foto==3)
+                return "Tamanho Inválido";
+        }else {
+            //Import do arquivo de Variaveis e Constantes
+            require_once('../modulo/config.php');
+
+            //Import do arquivo de função para conectar no BD  
+            require_once('conexaoMysql.php');
+
+            if(!$conex = conexaoMysql())
+            {
+                echo("<script> alert('".ERRO_CONEX_BD_MYSQL."'); </script>");
+                //die; //Finaliza a interpretação da página
+            }   
+
+            $sql = "update tblContatos set foto = '". $foto . "' where idContato = " . $id;
+
+            if(mysqli_query($conex, $sql))
+                if(mysqli_affected_rows($conex) > 0 )
+                return true;
+            else
+                return false;
+            
+        }
+    } else {
+       //Import do arquivo de Variaveis e Constantes
+        require_once('../modulo/config.php');
+
+        //Import do arquivo de função para conectar no BD  
+        require_once('conexaoMysql.php');
+
+        if(!$conex = conexaoMysql())
+        {
+            echo("<script> alert('".ERRO_CONEX_BD_MYSQL."'); </script>");
+            //die; //Finaliza a interpretação da página
+        }
+        
+        $nome = (string) null;
+        $celular = (string) null;
+        $email = (string) null;
+        $estado = (int) null;
+        $dataNascimento = (string) null;
+        $statusContato = (int) null;
+        $sexo = (string) null;
+        $obs = (string) null;
+        $foto = "noImage.png";
+
+
+        $nome = $dadosContato['nome'];
+        $celular = $dadosContato['celular'];
+        $email = $dadosContato['email'];
+        $estado = $dadosContato['estado'];
+        $dataNascimento = $dadosContato['dataNascimento'];
+        $statusContato = $dadosContato['statusContato'];
+
+        $sexo = $dadosContato['sexo'];
+        $obs = $dadosContato['obs'];
+        //$foto = uploadFoto($_FILES['fleFoto']);
+
+
+
+        // var_dump($arquivoUpload);
+
+        $sql =  "update tblcontatos set 
+            
+        nome = '".$nome."' ,
+        celular = '".$celular."' , 
+        email = '".$email."',
+        idEstado = ".$estado.",
+        dataNascimento = '".$dataNascimento."',
+        sexo = '".$sexo."',
+        obs = '".$obs."',
+        foto = '". $foto . "',
+        statusContato = ". $statusContato ."
+        where idContato = " . $id;
+        // Executa no BD o Script SQL
+        
+        if (mysqli_query($conex, $sql))
+            if(mysqli_affected_rows($conex) > 0 )
+                return convertJson($dadosContato);
+        else
+            return false;
+    }
+}
+
 
 //converte uma Array em Json
 function convertJson($data) {
