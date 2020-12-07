@@ -87,14 +87,3 @@ update tblContatos set statusContato = 1;
 select tblContatos.*, tblEstados.sigla from tblContatos, tblEstados where tblContatos.idEstado = tblEstados.idEstado and statusContato = 1;
 
 delete from tblContatos where idContato = 200;
-
-
-
-
-
-
-
-
-
-
-
