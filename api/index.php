@@ -263,4 +263,5 @@ $app->put('/contatos/{id}' , function ($request, $response, $args){
     }
 });
 
+
 $app->run(); // carrega todos os EndPoints criados na API !!!sempre deixar como ultima linha
